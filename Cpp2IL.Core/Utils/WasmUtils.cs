@@ -193,6 +193,10 @@ namespace Cpp2IL.Core.Utils
                         managedinstrs.Add(new CilInstruction(CilOpCodes.Ret));
                         break;
                     case WasmMnemonic.Call:
+                        var defs = GetMethodDefinitionsAtIndex((int)instr.Operands[0]);
+                        if (defs is null) break;
+                        if (defs.Count > 1) Console.WriteLine($"DEBUG: Method index {instr.Operands[0]} has more than one managed method inside of it");
+                        managedinstrs.Add(new CilInstruction(CilOpCodes.call))
                         break;
                     case WasmMnemonic.CallIndirect:
                         break;
